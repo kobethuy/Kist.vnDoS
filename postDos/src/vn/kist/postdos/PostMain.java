@@ -3,10 +3,6 @@
  */
 package vn.kist.postdos;
 
-import java.net.InetAddress;
-
-import com.savarese.rocksaw.net.RawSocket;
-
 /**
  * @author kobethuy
  *
@@ -19,12 +15,9 @@ public class PostMain {
 	 */
 	public static void main(String[] args) throws Exception {
 		
-		RawSocket sock = new RawSocket();
-		
-		sock.bind(InetAddress.getByName("localhost"));
-		
-		sock.open(RawSocket.PF_INET, RawSocket.getProtocolByName("TCP"));
-
+		PostThread th = new PostThread(149, "localhost/xampp/welcome.php");
+		th.initThread();
+		th.startThread();
 	}
 
 }
