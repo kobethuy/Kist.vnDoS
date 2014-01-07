@@ -40,7 +40,7 @@ public class PostThread{
 			con.createConnection();
 			
 			threadList.add(new Thread(con, String.valueOf(count_1)));
-			System.out.println("[+] Thread #" + count_1 + " created.");
+			PostGui.setConsoleLog("[+] Thread #" + count_1 + " created.\r\n");
 		}
 	}
 	
@@ -92,4 +92,8 @@ public class PostThread{
 		this.con = con;
 	}
 
+	public ArrayList<Thread> getThreadList() {
+		return threadList;
+	}
+	
 }

@@ -48,9 +48,7 @@ public class PostGui {
 	private JComboBox<?> attackType;
 	private JPanel controlPanel;
 	private JRadioButton rdioSimple;
-	private JSlider simpleSlider;
 	private JRadioButton rdioAdvance;
-	private JSpinner advSpin;
 	private JSpinner timeSpin;
 	private JLabel lblSleepTime;
 	private JLabel lblHostname;
@@ -68,7 +66,10 @@ public class PostGui {
 	private JMenuItem mntmExit;
 	private JMenuBar menuBar;
 	private String[] attackList;
+	private PostOpt opt;
+	private static JSlider simpleSlider;
 	private static JTextArea console;
+	private static JSpinner advSpin;
 	private static boolean ranParam, simple;
 	private static String param;
 	private static StringBuilder consoleLog;
@@ -145,6 +146,7 @@ public class PostGui {
 		
 		attackType 			= 			new JComboBox<Object>(attackList);
 		consoleLog 			= 			new StringBuilder();
+		opt					=			new PostOpt();
 		
 		setSimple(true);
 		setRanParam(true);
@@ -158,7 +160,7 @@ public class PostGui {
 		
 		
 		
-		if (isRanParam()) {
+		if (isRandom()) {
 			randomParameters.setSelected(true);
 			cusParam.setEnabled(false);
 		}
@@ -337,6 +339,27 @@ public class PostGui {
 			}
 		});
 		
+		btnStart.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				clearConsole();
+				try {
+					opt.handler(hostName.getText(), isSimple(), isRandom());
+					btnStart.setEnabled(false);
+				} catch (Exception e) {
+					PostGui.setConsoleLog("[-] Exception:" + e);
+				}
+			}
+		});
+		
+		btnStop.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				btnStart.setEnabled(true);
+				
+				for (int bar = 0; bar < opt.getThreads(); bar++)
+					opt.getTh().getThreadList().get(bar).interrupt();
+			}
+		});
+		
 		btnExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				System.exit(0);
@@ -348,7 +371,7 @@ public class PostGui {
 	/**
 	 * @return the ranParam
 	 */
-	public static boolean isRanParam() {
+	public static boolean isRandom() {
 		return ranParam;
 	}
 
@@ -393,10 +416,12 @@ public class PostGui {
 	
 	public static void setConsoleLog(String text) {
 		consoleLog.append(text);
+		setConsole(consoleLog.toString());
 	}
 	
 	public static void clearConsole() {
 		consoleLog.delete(0, consoleLog.length());
+		setConsole("");
 	}
 	
 	public static void setConsole(String text) {
@@ -416,4 +441,13 @@ public class PostGui {
 	public void setAttackList(String attackList, int index) {
 		this.attackList[index] = attackList;
 	}
+
+	public static JSlider getSimpleSlider() {
+		return simpleSlider;
+	}
+
+	public static JSpinner getAdvSpin() {
+		return advSpin;
+	}
+
 }
