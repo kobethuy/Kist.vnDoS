@@ -4,6 +4,7 @@
 package vn.kist.postdos;
 
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URL;
@@ -42,8 +43,12 @@ public class PostConnect implements Runnable{
 	 * 
 	 * @throws Exception
 	 */
-	public void createConnection() throws Exception{
-		con = (HttpURLConnection) url.openConnection();
+	public void createConnection(){
+		try {
+			con = (HttpURLConnection) url.openConnection();
+		} catch (IOException e) {
+			PostGui.setConsoleLog("[-] Exception: " + e + "\r\n");
+		}
 	}
 	
 	/**
