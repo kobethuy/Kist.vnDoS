@@ -28,16 +28,32 @@ public class PostConnect implements Runnable{
 
 	}
 	
+	/**
+	 * Start attacking.
+	 * 
+	 * @throws Exception
+	 */
 	public void start() throws Exception {
 		setHeaders();
 		sendRequests();
 	}
 	
-	
+	/**
+	 * Create a Http connection to target host.
+	 * 
+	 * @throws Exception
+	 */
 	public void createConnection() throws Exception{
 		con = (HttpURLConnection) url.openConnection();
 	}
 	
+	/**
+	 * Set the request method and headers.
+	 * Method: POST
+	 * User Agent: Mozilla/5.0
+	 * Accept Language: en-US, en;q=0.5
+	 * 
+	 */
 	public void setHeaders() {
 		
 		try {
@@ -57,6 +73,10 @@ public class PostConnect implements Runnable{
 		
 	}
 	
+	/**
+	 * Send the request to target host. The payload will be
+	 * sent one byte at a time, with a sleep interval of MAX_LONG.
+	 */
 	public void sendRequests() {
 		
 		try {
@@ -72,6 +92,12 @@ public class PostConnect implements Runnable{
 		}
 	}
 	
+	/**
+	 * Randomly generate a POST parameter with the following pattern:
+	 * abcdef : acbdef
+	 * 
+	 * @return the randomly generated parameter.
+	 */
 	public String genParam() {
 		
 		paramBuild = new StringBuilder();
@@ -94,30 +120,52 @@ public class PostConnect implements Runnable{
 		return paramBuild.toString();
 	}
 	
+	/**
+	 * Close all open connections.
+	 */
 	public void closeConnection() {
 		getCon().disconnect();
 	}
 
+	/**
+	 * Get the connection object.
+	 * 
+	 * @return the connection object.
+	 */
 	public HttpURLConnection getCon() {
 		return this.con;
 	}
 	
+	/**
+	 * Get the URL of the target host.
+	 * 
+	 * @return URL of the target host.
+	 */
 	public URL getUrl() {
 		return url;
 	}
 
+	/**
+	 * Set the URL of the target host.
+	 * 
+	 * @param url the URL of the target host.
+	 */
 	public void setUrl(URL url) {
 		this.url = url;
 	}
 
 	/**
-	 * @return the host
+	 * Get the hostname.
+	 * 
+	 * @return host the hostname.
 	 */
 	public static String getHost() {
 		return host;
 	}
 
 	/**
+	 * Set the hostname.
+	 * 
 	 * @param host the host to set
 	 */
 	public static void setHost(String host) {
@@ -125,28 +173,36 @@ public class PostConnect implements Runnable{
 	}
 
 	/**
-	 * @return the wr
+	 * Get the data output stream.
+	 * 
+	 * @return the output stream
 	 */
 	public DataOutputStream getWr() {
 		return wr;
 	}
 
 	/**
-	 * @param wr the wr to set
+	 * Set the data output stream.
+	 * 
+	 * @param wr the output stream to set
 	 */
 	public void setWr(DataOutputStream wr) {
 		this.wr = wr;
 	}
 
 	/**
-	 * @return the param
+	 * Get the POST parameter.
+	 * 
+	 * @return the parameter.
 	 */
 	public static String getParam() {
 		return param;
 	}
 
 	/**
-	 * @param param the param to set
+	 * Set the POST parameter.
+	 * 
+	 * @param param the parameter to set.
 	 */
 	public static void setParam(String param) {
 		PostConnect.param = param;

@@ -31,6 +31,11 @@ public class PostThread{
 		threadList = new ArrayList<Thread>();
 	}
 	
+	/**
+	 * Create threads and connect.
+	 * 
+	 * @throws Exception
+	 */
 	public void initThread() throws Exception {
 		
 		for (int count_1 = 0; count_1 < getThreadNum(); count_1++) {
@@ -44,6 +49,9 @@ public class PostThread{
 		}
 	}
 	
+	/**
+	 * Start the threads.
+	 */
 	public void startThread() {
 		for (int count_2 = 0; count_2 < getThreadNum(); count_2++) {
 			threadList.get(count_2).start();
@@ -51,47 +59,55 @@ public class PostThread{
 	}
 
 	/**
-	 * @return the threadNum
+	 * Get the number of threads.
+	 * 
+	 * @return the number of threads.
 	 */
 	public int getThreadNum() {
 		return threadNum;
 	}
 
 	/**
-	 * @param threadNum the threadNum to set
+	 * Set the number of threads.
+	 * 
+	 * @param threadNum the number of threads to set.
 	 */
 	public void setThreadNum(int threadNum) {
 		this.threadNum = threadNum;
 	}
 
 	/**
-	 * @return the host
+	 * Get the hostname.
+	 * 
+	 * @return the hostname.
 	 */
 	public String getHost() {
 		return host;
 	}
 
 	/**
-	 * @param host the host to set
+	 * Set the hostname.
+	 * 
+	 * @param host the hostname to set.
 	 */
 	public void setHost(String host) {
 		this.host = "http://" + host;
 	}
 
 	/**
-	 * @return the con
+	 * Get the PostConnect object.
+	 * 
+	 * @return the PostConnect object.
 	 */
 	public PostConnect getCon() {
 		return con;
 	}
 
 	/**
-	 * @param con the con to set
+	 * Get the list containing the threads.
+	 * 
+	 * @return the list that contains the threads.
 	 */
-	public void setCon(PostConnect con) {
-		this.con = con;
-	}
-
 	public ArrayList<Thread> getThreadList() {
 		return threadList;
 	}
