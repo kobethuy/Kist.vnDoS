@@ -4,7 +4,6 @@
 package vn.kist.postdos;
 
 import java.io.DataOutputStream;
-import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URL;
@@ -59,7 +58,7 @@ public class PostConnect implements Runnable{
 		try {
 			getCon().setRequestMethod("POST");
 		} catch (ProtocolException e) {
-			PostGui.setConsoleLog("[-] Exception: " + e);
+			PostGui.setConsoleLog("[-] Exception: " + e + "\r\n");
 		}
 		getCon().setRequestProperty("User-Agent", "Mozilla/5.0");
 		getCon().setRequestProperty("Accept-Language", "en-US,en;q=0.5");
@@ -68,7 +67,7 @@ public class PostConnect implements Runnable{
 		if(PostGui.isRandom()) {
 			setParam(genParam());
 		} else {
-			setParam(PostGui.getParam());
+			setParam(PostGui.getCusParam().getText());
 		}
 		
 	}
@@ -88,7 +87,7 @@ public class PostConnect implements Runnable{
 				Thread.sleep(Long.MAX_VALUE);
 			}
 		} catch (Exception e) {
-			PostGui.setConsoleLog("[-] Exception: " + e);
+			PostGui.setConsoleLog("[-] Exception: " + e +"\r\n");
 		}
 	}
 	

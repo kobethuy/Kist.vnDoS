@@ -57,7 +57,6 @@ public class PostGui {
 	private JLabel lblPort;
 	private JButton btnApply;
 	private JScrollPane paramScroll;
-	private JTextArea cusParam;
 	private JPanel timePane;
 	private JButton btnStart;
 	private JButton btnStop;
@@ -67,6 +66,7 @@ public class PostGui {
 	private JMenuBar menuBar;
 	private String[] attackList;
 	private PostOpt opt;
+	private static JTextArea cusParam;
 	private static JSlider simpleSlider;
 	private static JTextArea console;
 	private static JSpinner advSpin;
@@ -448,6 +448,10 @@ public class PostGui {
 
 	public static JSpinner getAdvSpin() {
 		return advSpin;
+	}
+
+	public static JTextArea getCusParam() {
+		return cusParam;
 	}
 
 }
